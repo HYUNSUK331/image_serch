@@ -3,6 +3,7 @@ class ArticleModel {
   String? date;
   String? siteName;
 
+
   ArticleModel({
     this.name,
     this.date,

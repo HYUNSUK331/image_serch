@@ -13,7 +13,7 @@ class ImageSearchView extends StatefulWidget {
 }
 
 class _ImageSearchViewState extends State<ImageSearchView> {
-  List data = [];
+
   final TextEditingController _textController = new TextEditingController();
   String? search;
 
@@ -100,6 +100,7 @@ class _ImageSearchViewState extends State<ImageSearchView> {
                   BuildContext context,
                   AsyncSnapshot snapshot,
                 ) {
+                  // snapshot 상태
                   switch (snapshot.connectionState) {
                     // 데이터 가 들어오지 못했을 때 사용
                     case ConnectionState.none:
@@ -124,7 +125,7 @@ class _ImageSearchViewState extends State<ImageSearchView> {
                               ) {
                                 // 인덱스는 포문 이다 여기는 포문이다.
                                 return ArticleItem(
-                                    snapshot: snapshot, index: index);
+                                    snapshot: snapshot, index: index, );
                               }),
                         ),
                       );
@@ -144,7 +145,6 @@ class _ImageSearchViewState extends State<ImageSearchView> {
 
     var dataConvertedToJSON = json.decode(response.body);
     List result = dataConvertedToJSON["documents"];
-
     return result;
   }
 

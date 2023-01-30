@@ -10,11 +10,14 @@ class ArticleItem extends StatefulWidget {
   State<ArticleItem> createState() => _ArtcleItemState();
 }
 
+bool favoriteCheck = true;
 class _ArtcleItemState extends State<ArticleItem> {
+
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
-      // 스크롤 사이즈 문제 해결
+        // 스크롤 사이즈 문제 해결
         scrollDirection: Axis.vertical,
         child: Column(
           //스냅샷을 돌리고 이런 식으로 가져온다.
@@ -27,10 +30,8 @@ class _ArtcleItemState extends State<ArticleItem> {
                     maximumSize: Size(150, 150), // 버튼 크기 키우면 이미지 알아서 맞춰준다.
                   ),
                   onPressed: () {
-                    print(
-                        "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@$widget.index"); // 해당 인덱스 확인
                     var indexCheck = widget.index;
-                    var snapshotCheck =  widget.snapshot;
+                    var snapshotCheck = widget.snapshot;
                     Navigator.push(
                       //클릭하면 ImageDetail 페이지로 이동
                       context,
@@ -38,26 +39,38 @@ class _ArtcleItemState extends State<ArticleItem> {
                           builder: (context) => ImageDetail(
                               snapshot: snapshotCheck,
                               indexCheck:
-                              indexCheck)), //여기서 snapshot,index를 그대로 받아 ImageDetail로 전달
+                                  indexCheck
+                          )), //여기서 snapshot,index를 그대로 받아 ImageDetail로 전달
                     );
                   },
                   child: Image.network(
-                    widget.snapshot.data[ widget.index]["thumbnail_url"],
+                    widget.snapshot.data[widget.index]["thumbnail_url"],
                     height: 150,
                     width: 150,
                     fit: BoxFit.fill,
                   )),
               Text("     "), // 이건 padding 줘야할거 같다.
               Column(children: [
-                Text( widget.snapshot.data[ widget.index]["datetime"].substring(0, 10)),
-                Text( widget.snapshot.data[ widget.index]["display_sitename"])
+                Text(widget.snapshot.data[widget.index]["datetime"]
+                    .substring(0, 10)),
+                Text(widget.snapshot.data[widget.index]["display_sitename"])
               ]),
-              Expanded(   // 여기는 비율로 맞췄다.
+              Expanded(
+                  // 여기는 비율로 맞췄다.
                   flex: 1,
                   child: IconButton(
-                      icon: Icon(Icons.favorite_border),
-                      onPressed: () {}
-                  ))
+                      icon: Icon(
+                          favoriteCheck ? Icons.favorite_border : Icons.favorite,
+                          color: favoriteCheck ? null : Colors.red),
+                      onPressed: () {
+                        setState(() {
+                          if (favoriteCheck == true) {
+                            favoriteCheck = false;
+                          } else if (favoriteCheck == false) {
+                            favoriteCheck = true;
+                          }
+                        });
+                      }))
             ]),
             Divider(
               color: Colors.black.withOpacity(0.2),
@@ -66,12 +79,23 @@ class _ArtcleItemState extends State<ArticleItem> {
           ],
         ));
   }
+
+  void favercheck1() {
+    final alreadySaved = widget.snapshot.data[widget.index];
+  }
+
+  void favercheck() {
+    if (favoriteCheck == false) {
+      Icons.remove;
+      Icon(Icons.favorite_border);
+      favoriteCheck = true;
+    } else if (favoriteCheck == true) {
+      Icons.remove;
+      Icon(Icons.favorite);
+      favoriteCheck = false;
+    }
+  }
 }
-
-
-
-
-
 
 // 메인페이지에 보여줄 이미지 리스트
 /*class ArticleItem extends StatelessWidget {
@@ -88,9 +112,3 @@ class _ArtcleItemState extends State<ArticleItem> {
   }
 }
 */
-
-
-
-
-
-

@@ -26,7 +26,8 @@ class _FavoriteViewState extends State<FavoriteView> {
           centerTitle: true,
         ),
         body: Container(alignment: Alignment.topRight,
-          child: DropdownButton(
+          child: Column(
+            children:[DropdownButton(
             value: _selectedValue,
             items: _valueList.map(
               (value) {
@@ -39,9 +40,12 @@ class _FavoriteViewState extends State<FavoriteView> {
             onChanged: (value) {
               setState(() {
                 _selectedValue = value!;
+
               });
             },
           ),
-        ));
+        ]),
+        ),
+    );
   }
 }
